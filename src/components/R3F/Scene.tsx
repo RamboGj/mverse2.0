@@ -2,11 +2,17 @@
 'use client'
 
 import { AnimationsContext } from '@/contexts/AnimationsContext'
-import { OrbitControls, Sparkles, useGLTF, useTexture } from '@react-three/drei'
+import {
+  OrbitControls,
+  Sparkles,
+  useAnimations,
+  useGLTF,
+  useTexture,
+} from '@react-three/drei'
 import { RootState, useFrame } from '@react-three/fiber'
 import { gsap } from 'gsap'
 
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 
 interface PositionProps {
   x: number
@@ -50,20 +56,44 @@ export function Scene() {
     }
   })
 
-  const { nodes }: any = useGLTF('./Stage/MVERSEGLB.glb')
-  const stageBakedTexture = useTexture('./Stage/ExtrudeSurface_Color.png')
+  const { nodes }: any = useGLTF('./Stage/MverseEnv.glb')
+  const stageBakedTexture = useTexture('./Stage/stageBaked.png')
+
+  const LilMverseModel = useGLTF('./LilMverse/typing.glb')
+  const lilMverseBakedTexture = useTexture('./LilMverse/bakedLil.png')
+
+  const animations = useAnimations(
+    LilMverseModel.animations,
+    LilMverseModel.scene,
+  )
+
+  useEffect(() => {
+    console.log('animations', animations)
+    console.log('LilMverseModel', LilMverseModel)
+  }, [])
 
   return (
     <>
       <OrbitControls />
 
+      <directionalLight position={[1, 2, 3]} intensity={1.5} />
+      <ambientLight />
+
       <mesh
         scale={0.01}
-        geometry={nodes.Extrude.geometry}
+        geometry={nodes.Cylinder1.geometry}
         rotation-y={Math.PI * 1}
       >
         <meshBasicMaterial map={stageBakedTexture} map-flipY={false} />
       </mesh>
+
+      <primitive
+        rotation-y={Math.PI * 0.3}
+        position={[-5, -7.5, 11]}
+        object={LilMverseModel.scene}
+        scale={0.01}
+        material={lilMverseBakedTexture}
+      />
 
       <Sparkles
         size={64}
@@ -78,4 +108,4 @@ export function Scene() {
   )
 }
 
-useGLTF.preload(['./Stage/MVERSE.gltf'])
+useGLTF.preload(['./Stage/MVERSE.gltf', './LilMverse/typing.glb'])

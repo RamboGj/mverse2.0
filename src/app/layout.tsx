@@ -21,7 +21,7 @@ export default function RootLayout({
 
       <AnimationsContextProvider>
         <body
-          className={`${inter.className} max-w-screen w-full h-screen fixed top-0 left-0 overflow-hidden bg-[#0F0F0F]`}
+          className={`${inter.className} max-w-screen w-full h-screen fixed top-0 left-0 overflow-hidden bg-[#0F0F0F] backdrop-blur-lg`}
         >
           {children}
         </body>
