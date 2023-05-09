@@ -40,18 +40,6 @@ export function LastUI() {
               ) : (
                 <NFTReview />
               )}
-              {currentStep === mintSteps.Review ? (
-                <footer className="max-w-[1280px] w-full text-white z-40 absolute bottom-12 left-0">
-                  <div className="flex flex-col items-center gap-4">
-                    <button className="w-[248px] text-white border border-greenyellow rounded-[40px] bg-[#0F0F0F] h-[50px] flex items-center justify-center hover:shadow-[0_0_15px_rgba(208,255,13,0.4)] transition duration-300">
-                      <span className="mt-1 leading-none">GO TO PROFILE</span>
-                    </button>
-                    <button className="w-[215px] text-white border border-greenyellow rounded-[40px] bg-[#0F0F0F] h-[50px] flex items-center justify-center hover:shadow-[0_0_15px_rgba(208,255,13,0.4)] transition duration-300">
-                      <span className="mt-1 leading-none">PLAY AGAIN</span>
-                    </button>
-                  </div>
-                </footer>
-              ) : null}
             </Dialog.Overlay>
           </Dialog.Root>
         </div>
