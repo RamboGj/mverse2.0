@@ -12,7 +12,8 @@ import {
 import { RootState, useFrame } from '@react-three/fiber'
 import { gsap } from 'gsap'
 
-import { useContext, useEffect } from 'react'
+import { Suspense, useContext, useEffect } from 'react'
+import { LilMverse } from './LilMverse'
 
 interface PositionProps {
   x: number
@@ -56,24 +57,40 @@ export function Scene() {
     }
   })
 
-  const { nodes }: any = useGLTF('./Stage/MverseEnv.glb')
-  const stageBakedTexture = useTexture('./Stage/stageBaked.png')
+  const lilRobotModel = useGLTF('./LilMverse/robotHipHopDance.glb')
 
-  const LilMverseModel = useGLTF('./LilMverse/typing.glb')
-  const lilMverseBakedTexture = useTexture('./LilMverse/bakedLil.png')
-
-  const animations = useAnimations(
-    LilMverseModel.animations,
-    LilMverseModel.scene,
+  const lilRobotModelAnimations = useAnimations(
+    lilRobotModel.animations,
+    lilRobotModel.scene,
   )
 
   useEffect(() => {
-    console.log('animations', animations)
-    console.log('LilMverseModel', LilMverseModel)
+    lilRobotModelAnimations.actions.animation_0?.play()
   }, [])
+
+  const { nodes }: any = useGLTF('./Stage/MverseEnv.glb')
+  const stageBakedTexture = useTexture('./Stage/stageBaked.png')
 
   return (
     <>
+      {/* <EffectComposer>
+        <DepthOfField
+          focusDistance={focusDistance}
+          focalLength={focalLength}
+          bokehScale={bokehScale}
+        />
+      </EffectComposer> */}
+
+      <Sparkles
+        size={64}
+        scale={[50, 25, 50]}
+        position-y={2}
+        position-z={-12}
+        speed={3}
+        count={60}
+        color="#D0FF0D"
+      />
+
       <OrbitControls />
 
       <directionalLight position={[1, 2, 3]} intensity={1.5} />
@@ -88,24 +105,18 @@ export function Scene() {
       </mesh>
 
       <primitive
-        rotation-y={Math.PI * 0.3}
-        position={[-5, -7.5, 11]}
-        object={LilMverseModel.scene}
-        scale={0.01}
-        material={lilMverseBakedTexture}
+        position={[-15, -7.85, -10]}
+        rotation-y={-Math.PI * 0.45}
+        object={lilRobotModel.scene}
+        scale={0.011}
+        material={lilRobotModelAnimations}
       />
 
-      <Sparkles
-        size={64}
-        scale={[60, 30, 60]}
-        position-y={2}
-        position-z={-12}
-        speed={3}
-        count={120}
-        color="#D0FF0D"
-      />
+      <Suspense fallback={null}>
+        <LilMverse scene={sceneToMove} />
+      </Suspense>
     </>
   )
 }
 
-useGLTF.preload(['./Stage/MVERSE.gltf', './LilMverse/typing.glb'])
+useGLTF.preload('./LilMverse/robotHipHopDance.glb')

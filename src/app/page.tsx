@@ -1,16 +1,12 @@
 'use client'
 
 import { Canvas } from '@react-three/fiber'
-
-import { AnimationsContext } from '@/contexts/AnimationsContext'
-import { useContext } from 'react'
 import { Leva } from 'leva'
+
 import { Scene } from '@/components/R3F/Scene'
 import { Steps } from '@/components/NextApp/Steps'
 
 export default function Home() {
-  const { sceneToMove } = useContext(AnimationsContext)
-
   return (
     <div className="w-full h-full">
       <Leva />
@@ -28,7 +24,7 @@ export default function Home() {
       >
         <Scene />
       </Canvas>
-      <Steps step={sceneToMove} />
+      <Steps />
     </div>
   )
 }
