@@ -1,10 +1,12 @@
-/* eslint-disable no-useless-computed-key */
 /* eslint-disable react/no-unknown-property */
-import { useAnimations, useGLTF, useTexture } from '@react-three/drei'
-import { useEffect } from 'react'
+import { AnimationsContext } from '@/contexts/AnimationsContext'
+import { useAnimations, useGLTF } from '@react-three/drei'
+import { useContext } from 'react'
+import { LilMverseModel } from './LilMverseModel'
 
-export function LilMverse({ scene }: { scene: string }) {
-  const lilMverseBakedTexture = useTexture('./LilMverse/lilBakedTexture.png')
+export function LilMverse() {
+  const { sceneToMove } = useContext(AnimationsContext)
+
   const lilTypingModel = useGLTF('./LilMverse/typing.glb')
   const lilRappingModel = useGLTF('./LilMverse/rapping.glb')
   const lilRobotModel = useGLTF('./LilMverse/robotHipHopDance.glb')
@@ -24,59 +26,39 @@ export function LilMverse({ scene }: { scene: string }) {
     lilRobotModel.scene,
   )
 
-  useEffect(() => {
-    switch (scene) {
-      case '' || 'root':
-        lilTypingModelAnimations.actions.animation_0?.play()
-        break
-      case 'second':
-        lilRappingModelAnimations.actions.animation_0?.play()
-        break
-      case 'last':
-        lilRobotModelAnimations.actions.animation_0?.play()
-        break
-    }
-  }, [scene])
-
-  const modelPositions = {
-    ['root']: [-5, -7.5, 11],
-    ['second']: [18, -9, -12],
-    ['last']: [-15, -7.85, -10],
+  const lilMverseVariants = {
+    root: {
+      postion: [-5, -7.5, 11],
+      rotation: Math.PI * 0.3,
+      model: lilTypingModel.scene,
+      scale: 0.01,
+      animation: lilTypingModelAnimations.actions.animation_0,
+    },
+    second: {
+      postion: [18, -9, -12],
+      rotation: Math.PI * 1,
+      model: lilRappingModel.scene,
+      scale: 0.0135,
+      animation: lilRappingModelAnimations.actions.animation_0,
+    },
+    last: {
+      postion: [-15, -7.85, -10],
+      rotation: -Math.PI * 0.45,
+      model: lilRobotModel.scene,
+      scale: 0.011,
+      animation: lilRobotModelAnimations.actions.animation_0,
+    },
   }
 
-  switch (scene) {
+  switch (sceneToMove) {
     case '':
-      return (
-        <primitive
-          rotation-y={Math.PI * 0.3}
-          position={modelPositions.root}
-          object={lilTypingModel.scene}
-          scale={0.01}
-          material={lilMverseBakedTexture}
-        />
-      )
+      return <LilMverseModel {...lilMverseVariants.root} />
 
     case 'second':
-      return (
-        <primitive
-          position={modelPositions.second}
-          rotation-y={Math.PI * 1}
-          object={lilRappingModel.scene}
-          scale={0.0135}
-          material={lilMverseBakedTexture}
-        />
-      )
+      return <LilMverseModel {...lilMverseVariants.second} />
 
     case 'last':
-      return (
-        <primitive
-          position={modelPositions.last}
-          rotation-y={-Math.PI * 0.45}
-          object={lilRobotModel.scene}
-          scale={0.011}
-          material={lilRobotModelAnimations}
-        />
-      )
+      return <LilMverseModel {...lilMverseVariants.last} />
     default:
       return null
   }

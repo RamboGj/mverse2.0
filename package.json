@@ -9,18 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.1.0",
     "@next/font": "^13.3.4",
+    "@paperxyz/embedded-wallet-service-sdk": "^1.0.0",
     "@radix-ui/react-dialog": "^1.0.3",
     "@react-three/drei": "^9.66.1",
     "@react-three/fiber": "^8.13.0",
     "@react-three/postprocessing": "^2.11.0",
     "@rocketseat/eslint-config": "^1.2.0",
+    "@thirdweb-dev/react": "^3.11.11",
+    "@thirdweb-dev/sdk": "^3.10.14",
     "@types/node": "18.16.3",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
     "autoprefixer": "10.4.14",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.4",
+    "ethers": "^5.7.2",
     "framer-motion": "^10.12.7",
     "gsap": "^3.11.5",
     "leva": "^0.9.34",
@@ -31,9 +36,11 @@
     "r3f-perf": "^7.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9",
     "tailwindcss": "3.3.2",
     "three": "^0.152.2",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/three": "^0.151.0"

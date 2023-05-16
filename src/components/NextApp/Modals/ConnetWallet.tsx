@@ -1,9 +1,13 @@
 import { modalAnimations } from '@/utils/constants'
+import { ModalProps } from '@/utils/types'
 import * as Dialog from '@radix-ui/react-dialog'
+import { useWalletConnect } from '@thirdweb-dev/react'
 
 import { motion } from 'framer-motion'
 
-export function ConnectWallet({ action }: { action: () => void }) {
+export function ConnectWallet({ action, onClose, onOpen }: ModalProps) {
+  const onAuthenticateWithWalletConnect = useWalletConnect()
+
   return (
     <motion.div
       className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
@@ -14,7 +18,10 @@ export function ConnectWallet({ action }: { action: () => void }) {
     >
       <Dialog.Content className="p-[122px] w-[530px] rounded-[40px] overflow-hidden top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0F0F0F]/95 shadow-lg">
         <div className="flex flex-col gap-7 items-center">
-          <button className="w-[240px] h-[50px] flex justify-center items-center leading-none text-black px-12 bg-[#D0FF0D] border border-[#B3BF80] rounded-[40px] shadow-[0_0_15px_rgba(208,255,13,0.4)] hover:shadow-[0_0_25px_rgba(208,255,13,0.4)] transition duration-300">
+          <button
+            onClick={() => onAuthenticateWithWalletConnect({ chainId: 80001 })}
+            className="w-[240px] h-[50px] flex justify-center items-center leading-none text-black px-12 bg-[#D0FF0D] border border-[#B3BF80] rounded-[40px] shadow-[0_0_15px_rgba(208,255,13,0.4)] hover:shadow-[0_0_25px_rgba(208,255,13,0.4)] transition duration-300"
+          >
             <span className="mt-1">Connect wallet</span>
           </button>
           <button

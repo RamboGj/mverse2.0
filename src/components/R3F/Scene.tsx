@@ -2,17 +2,11 @@
 'use client'
 
 import { AnimationsContext } from '@/contexts/AnimationsContext'
-import {
-  OrbitControls,
-  Sparkles,
-  useAnimations,
-  useGLTF,
-  useTexture,
-} from '@react-three/drei'
+import { OrbitControls, Sparkles, useGLTF, useTexture } from '@react-three/drei'
 import { RootState, useFrame } from '@react-three/fiber'
 import { gsap } from 'gsap'
 
-import { Suspense, useContext, useEffect } from 'react'
+import { Suspense, useContext } from 'react'
 import { LilMverse } from './LilMverse'
 
 interface PositionProps {
@@ -57,17 +51,6 @@ export function Scene() {
     }
   })
 
-  const lilRobotModel = useGLTF('./LilMverse/robotHipHopDance.glb')
-
-  const lilRobotModelAnimations = useAnimations(
-    lilRobotModel.animations,
-    lilRobotModel.scene,
-  )
-
-  useEffect(() => {
-    lilRobotModelAnimations.actions.animation_0?.play()
-  }, [])
-
   const { nodes }: any = useGLTF('./Stage/MverseEnv.glb')
   const stageBakedTexture = useTexture('./Stage/stageBaked.png')
 
@@ -104,16 +87,8 @@ export function Scene() {
         <meshBasicMaterial map={stageBakedTexture} map-flipY={false} />
       </mesh>
 
-      <primitive
-        position={[-15, -7.85, -10]}
-        rotation-y={-Math.PI * 0.45}
-        object={lilRobotModel.scene}
-        scale={0.011}
-        material={lilRobotModelAnimations}
-      />
-
       <Suspense fallback={null}>
-        <LilMverse scene={sceneToMove} />
+        <LilMverse />
       </Suspense>
     </>
   )
