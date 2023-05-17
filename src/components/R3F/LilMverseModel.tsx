@@ -1,9 +1,9 @@
+/* eslint-disable react/no-unknown-property */
 import { useTexture } from '@react-three/drei'
 import { useEffect } from 'react'
 import { AnimationAction } from 'three'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 
-/* eslint-disable react/no-unknown-property */
 interface ModelProps {
   postion: number[]
   rotation: number
@@ -13,7 +13,7 @@ interface ModelProps {
 }
 
 export function LilMverseModel(props: ModelProps) {
-  const lilMverseBakedTexture = useTexture('./LilMverse/lilBakedTexture.png')
+  const lilMverseBakedTexture = useTexture('./LilMverse/textureLaptop.png')
 
   useEffect(() => {
     props.animation?.play()

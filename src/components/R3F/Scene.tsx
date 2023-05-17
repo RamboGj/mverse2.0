@@ -2,7 +2,13 @@
 'use client'
 
 import { AnimationsContext } from '@/contexts/AnimationsContext'
-import { OrbitControls, Sparkles, useGLTF, useTexture } from '@react-three/drei'
+import {
+  Cloud,
+  OrbitControls,
+  Sparkles,
+  useGLTF,
+  useTexture,
+} from '@react-three/drei'
 import { RootState, useFrame } from '@react-three/fiber'
 import { gsap } from 'gsap'
 
@@ -76,8 +82,8 @@ export function Scene() {
 
       <OrbitControls />
 
-      <directionalLight position={[1, 2, 3]} intensity={1.5} />
-      <ambientLight />
+      {/* <directionalLight position={[1, 2, 3]} intensity={1.5} />
+      <ambientLight intensity={0.5} /> */}
 
       <mesh
         scale={0.01}
@@ -86,6 +92,13 @@ export function Scene() {
       >
         <meshBasicMaterial map={stageBakedTexture} map-flipY={false} />
       </mesh>
+      {/* Clouds from root/first step */}
+      <Cloud color="#817979" speed={0.5} position={[0, -8, 15]} />
+      <Cloud color="#817979" speed={0.5} position={[0, -8, 15]} />
+
+      {/* Clouds from second step */}
+      <Cloud color="#817979" speed={0.5} position={[20, -8, -15]} />
+      <Cloud color="#817979" speed={0.5} position={[25, -8, -20]} />
 
       <Suspense fallback={null}>
         <LilMverse />
@@ -93,5 +106,3 @@ export function Scene() {
     </>
   )
 }
-
-useGLTF.preload('./LilMverse/robotHipHopDance.glb')

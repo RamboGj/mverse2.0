@@ -5,8 +5,12 @@ import { Leva } from 'leva'
 
 import { Scene } from '@/components/R3F/Scene'
 import { Steps } from '@/components/NextApp/Steps'
+import { Suspense, useState } from 'react'
+import { LoadingScreen } from '@/components/NextApp/LoadingScreen'
 
 export default function Home() {
+  const [start, setStart] = useState<boolean>(false)
+
   return (
     <div className="w-full h-full">
       <Leva />
@@ -22,9 +26,12 @@ export default function Home() {
         }}
         className="min-h-screen w-full z-0 backdrop-blur-lg"
       >
-        <Scene />
+        <Suspense fallback={null}>{start ? <Scene /> : null}</Suspense>
       </Canvas>
-      <Steps />
+
+      <LoadingScreen visible={!start} onStart={() => setStart(true)} />
+
+      {start ? <Steps /> : null}
     </div>
   )
 }

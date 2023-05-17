@@ -28,8 +28,8 @@ export function LilMverse() {
 
   const lilMverseVariants = {
     root: {
-      postion: [-5, -7.5, 11],
-      rotation: Math.PI * 0.3,
+      postion: [-12.5, -8.5, -24],
+      rotation: Math.PI * 1,
       model: lilTypingModel.scene,
       scale: 0.01,
       animation: lilTypingModelAnimations.actions.animation_0,
